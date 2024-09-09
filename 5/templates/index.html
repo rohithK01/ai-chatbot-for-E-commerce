@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Chatbot</title>
+
+    <style>
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #e1e6e4; 
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #000000; 
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+#chatbox {
+    height: 200px;
+    overflow-y: auto;
+    border: 1px solid #f4f5f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#responseOptions {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #eceeef; 
+    border-radius: 4px;
+    cursor: pointer;
+    color: #13a4ed; 
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #6604e5; 
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0d23cb; 
+}
+</style>
+</head>
+<body>
+    <div>
+        <h1>AI-Powered Chatbot for Customer Service in E-Commerce</h1>
+        <div>
+            <div id="chatbox"></div>
+            <select id="responseOptions">
+                <option value="Select">Select</option>
+                <option value="hello">Hello</option>
+                <option value="bye">Goodbye</option>
+                <option value="product_info">Product Info</option>
+                <option value="thanks">Thanks</option>
+                <option value="order_status">Order Status</option>
+                <option value="delivery_info">Delivery Info</option>
+                <option value="return_policy">Return Policy</option>
+                <option value="payment_options">Payment Options</option>
+                <option value="prime_membership">Amazon Prime Membership</option>
+                <option value="customer_service">Customer Service</option>
+                <option value="gift_cards">Gift Cards</option>
+                <option value="wishlist">Wishlist</option>
+                <option value="deals_and_promotions">Deals and Promotions</option>
+                <option value="recommendations">Personalized Recommendations</option>
+                <option value="tech_support">Technical Support</option>
+                <option value="security_and_privacy">Security and Privacy</option>
+                <option value="shopping_cart">Shopping Cart</option>
+                <option value="order_tracking">Order Tracking</option>
+                <option value="subscription_services">Subscription Services</option>
+                <option value="international_shipping">International Shipping</option>
+                <option value="customer_reviews">Customer Reviews</option>
+                <option value="feedback_survey">Feedback Survey</option>
+                <option value="lost_package">Lost Package</option>
+                <option value="business_accounts">Business Accounts</option>
+                <option value="student_discounts">Student Discounts</option>
+                <option value="product_comparison">Product Comparison</option>
+                <option value="gift_wrapping">Gift Wrapping</option>
+                <option value="community_forum">Community Forum</option>
+                <option value="product_customization">Product Customization</option>
+                <option value="voice_shopping">Voice Shopping</option>
+                <option value="virtual_assistant">Virtual Assistant</option>
+                <option value="subscription_management">Subscription Management</option>
+                <option value="amazon_sustainability">Amazon Sustainability</option>
+                <option value="prime_day">Prime Day</option>
+                <option value="book_recommendations">Book Recommendations</option>
+                <option value="amazon_fresh">Amazon Fresh</option>
+                <option value="live_support">Live Support</option>
+                <option value="product_availability">Product Availability</option>
+                <option value="amazon_locker">Amazon Locker</option>
+                <option value="automotive_parts">Automotive Parts</option>
+                <option value="charitable_donations">Charitable Donations</option>
+                <option value="amazon_music">Amazon Music</option>
+                <option value="amazon_photos">Amazon Photos</option>
+                <option value="amazon_video">Amazon Video</option>
+                <option value="smart_home_devices">Smart Home Devices</option>
+                <option value="amazon_games">Amazon Games</option>
+                <option value="tech_gadgets">Tech Gadgets</option>
+                <option value="amazon_books">Amazon Books</option>
+                <option value="amazon_fashion">Amazon Fashion</option>
+                <option value="amazon_devices">Amazon Devices</option>
+                <option value="amazon_business">Amazon Business</option>
+                <option value="default">I'm sorry, I didn't understand. Can you please rephrase?</option>
+            </select>
+            
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const selectedOption = document.getElementById("responseOptions");
+            const userSelectedResponse = selectedOption.options[selectedOption.selectedIndex].value;
+
+
+            fetch("/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ user_input: userSelectedResponse }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    appendMessage("You: " + userSelectedResponse);
+                    appendMessage("Chatbot: " + data.response);
+                })
+                .catch(error => console.error("Error:", error));
+
+            selectedOption.selectedIndex = 0;
+        }
+
+        function appendMessage(message) {
+            const chatbox = document.getElementById("chatbox");
+            const newMessage = document.createElement("div");
+            newMessage.textContent = message;
+            chatbox.appendChild(newMessage);
+        }
+    </script>
+</body>
+</html>
